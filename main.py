@@ -25,3 +25,13 @@ def show_lessons():
             for theme in lesson.themes:
                 print(f"  {theme.title}")
         print()
+
+def update_lessons(lesson_id: int, new_name: str):
+    with Session(engine) as session:
+        lesson = session.get(Lesson, lesson_id)
+        if lesson:
+            lesson.name = new_name
+            session.commit()
+            print("'lesson' ma'lumoti yangilandi!\n")
+        else:
+            print("'lesson' ma'lumoti topilmadi!\n")
