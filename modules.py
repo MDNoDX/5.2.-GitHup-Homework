@@ -12,6 +12,9 @@ class Lesson(Base):
     name: Mapped[str] = mapped_column(String(50))
     themes: Mapped[List["Theme"]] = relationship(
         back_populates = "lesson", cascade = "all, delete-orphan")
+    
+    def __repr__(self):
+        return f"Lesson ID: {self.id} - Name: {self.name}"
 
 class Theme(Base):
     __tablename__ = "themes"
@@ -20,6 +23,9 @@ class Theme(Base):
     title: Mapped[str] = mapped_column(String(50))
     lesson_id: Mapped[int] = mapped_column(ForeignKey("lessons.id"))
     lesson: Mapped["Lesson"] = relationship(back_populates = "themes")
+
+    def __repr__(self):
+        return f"Theme ID: {self.id} - Title: {self.title} (Lesson ID: {self.lesson_id})"
 
 engine = create_engine("sqlite:///lessons.db")
 Base.metadata.create_all(engine)
