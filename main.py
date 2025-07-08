@@ -62,3 +62,13 @@ def update_theme(theme_id: int, new_title: str):
             print("'theme' ma'lumoti yangilandi!\n")
         else:
             print("'theme' ma'lumoti topilmadi!\n")
+
+if __name__ == "__main__":
+    add_lesson_with_themes("Dasturchilik", ["Python", "C++", "Java"])
+    add_theme("JavaScript", 1)
+
+    show_lessons()
+    show_themes()
+
+    update_lesson(1, "Bootcamp Foundation")
+    update_theme(1, "Figma")
