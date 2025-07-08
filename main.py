@@ -26,7 +26,7 @@ def show_lessons():
                 print(f"  {theme.title}")
         print()
 
-def update_lessons(lesson_id: int, new_name: str):
+def update_lesson(lesson_id: int, new_name: str):
     with Session(engine) as session:
         lesson = session.get(Lesson, lesson_id)
         if lesson:
@@ -35,3 +35,30 @@ def update_lessons(lesson_id: int, new_name: str):
             print("'lesson' ma'lumoti yangilandi!\n")
         else:
             print("'lesson' ma'lumoti topilmadi!\n")
+
+def add_theme(title: str, lesson_id: int):
+    with Session(engine) as session:
+        theme = Theme(title = title, lesson_id = lesson_id)
+        session.add(theme)
+        session.commit()
+        print("'theme' ma'lumotlari qo'shildi!\n")
+
+def show_themes():
+    with Session(engine) as session:
+        stmt = select(Theme)
+        themes = session.scalars(stmt)
+        print("• Themes: \n")
+        for theme in themes:
+            print("-" * 30)
+            print(f"{theme.id}: {theme.title}\nLesson ID: {theme.lesson_id}")
+        print()
+
+def update_theme(theme_id: int, new_title: str):
+    with Session(engine) as session:
+        theme = session.get(Theme, theme_id)    
+        if theme:
+            theme.title = new_title
+            session.commit()
+            print("'theme' ma'lumoti yangilandi!\n")
+        else:
+            print("'theme' ma'lumoti topilmadi!\n")
